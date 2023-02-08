@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AddTaskSheet extends StatelessWidget {
-  const AddTaskSheet({Key? key}) : super(key: key);
+  const AddTaskSheet({Key? key, required this.onComplete}) : super(key: key);
+
+  final Function(String) onComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +19,24 @@ class AddTaskSheet extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.lightBlueAccent, fontSize: 32),
           ),
-          const TextField(
+          TextField(
             autofocus: true,
             textAlign: TextAlign.center,
+            onChanged: (value) => task = value,
           ),
           const SizedBox(height: 16),
           MaterialButton(
-              color: Colors.lightBlueAccent,
-              height: 48,
-              onPressed: () {
-                print(task);
-              },
-              child: const Text(
-                "Add",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ))
+            color: Colors.lightBlueAccent,
+            height: 48,
+            onPressed: () {
+              onComplete(task);
+              Navigator.pop(context);
+            },
+            child: const Text(
+              "Add",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
         ],
       ),
     );
