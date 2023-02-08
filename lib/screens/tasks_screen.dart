@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/models/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 import 'package:todoey_flutter/screens/add_task_sheet.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 
-class TasksScreen extends StatefulWidget {
+class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
-
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy cookies'),
-    Task(name: 'Buy eggs'),
-    Task(name: 'Buy cereals')
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +18,7 @@ class _TasksScreenState extends State<TasksScreen> {
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
-            builder: (context) => AddTaskSheet(
-              onComplete: (name) => setState(() {
-                tasks.add(Task(name: name));
-              }),
-            ),
+            builder: (context) => AddTaskSheet(),
           );
         },
         backgroundColor: Colors.lightBlueAccent,
@@ -66,7 +52,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length} Tasks',
+                  '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: const TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ],
@@ -78,9 +64,9 @@ class _TasksScreenState extends State<TasksScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TaskList(tasks: tasks),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: TaskList(),
               ),
             ),
           )

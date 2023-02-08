@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 
 class AddTaskSheet extends StatelessWidget {
-  const AddTaskSheet({Key? key, required this.onComplete}) : super(key: key);
-
-  final Function(String) onComplete;
+  const AddTaskSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String task = '';
+    String taskName = '';
 
     return Padding(
       padding: const EdgeInsets.all(32.0),
@@ -22,14 +22,14 @@ class AddTaskSheet extends StatelessWidget {
           TextField(
             autofocus: true,
             textAlign: TextAlign.center,
-            onChanged: (value) => task = value,
+            onChanged: (value) => taskName = value,
           ),
           const SizedBox(height: 16),
           MaterialButton(
             color: Colors.lightBlueAccent,
             height: 48,
             onPressed: () {
-              onComplete(task);
+              Provider.of<TaskData>(context, listen: false).addTask(taskName);
               Navigator.pop(context);
             },
             child: const Text(
