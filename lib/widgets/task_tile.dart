@@ -6,11 +6,13 @@ class TaskTile extends StatelessWidget {
     required this.onChange,
     required this.name,
     required this.completed,
+    required this.onLongPress,
   }) : super(key: key);
 
   final String name;
   final bool completed;
   final Function(bool?) onChange;
+  final Function() onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class TaskTile extends StatelessWidget {
           decoration: completed ? TextDecoration.lineThrough : null,
         ),
       ),
+      onLongPress: onLongPress,
       trailing: Checkbox(
         value: completed,
         activeColor: Colors.lightBlueAccent,
